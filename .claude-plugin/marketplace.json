@@ -1,0 +1,11 @@
+{
+  "name": "rocha-plugins",
+  "owner": { "name": "Gabriel Rocha" },
+  "plugins": [
+    {
+      "name": "leis-brasil",
+      "source": "./plugins/leis-brasil",
+      "description": "Consulta a legislação brasileira em Markdown (acervo ctresb/leis): Constituição, leis federais, atos da Receita Federal e do CARF, súmulas e temas do STF/STJ/TST e tratados de bitributação."
+    }
+  ]
+}

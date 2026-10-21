@@ -1,0 +1,6 @@
+{
+  "name": "leis-brasil",
+  "version": "1.0.0",
+  "description": "Consulta a legislação brasileira em Markdown (acervo ctresb/leis), com citação literal do texto e link para a fonte oficial.",
+  "author": { "name": "Gabriel Rocha" }
+}
