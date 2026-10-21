@@ -12,8 +12,7 @@ cada texto do GitHub na hora da consulta.
 
 ### Instalar em um computador novo
 
-Pré-requisitos: Claude Code, Python 3, git e o GitHub CLI logado na conta dona deste repositório
-(`gh auth login` e depois `gh auth setup-git`, porque o repositório é privado).
+Pré-requisitos: Claude Code, Python 3 e git.
 
 ```bash
 claude plugin marketplace add rochagg/rocha-plugins
