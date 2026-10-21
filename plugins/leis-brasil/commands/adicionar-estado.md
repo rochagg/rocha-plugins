@@ -1,8 +1,8 @@
 ---
-description: Acrescenta ao acervo as leis de um estado (e, se pedido, dos municípios dele)
+description: Inclui na busca por assunto as leis de um estado (e, se pedido, dos municípios dele)
 argument-hint: UF [municipios]
 allowed-tools: Bash
 ---
 Argumentos: $ARGUMENTS
 
-Rode `bash "${CLAUDE_PLUGIN_ROOT}/skills/leis-brasil/scripts/acervo.sh" adicionar-estado <UF>` com a sigla informada. Se o usuário também pediu municípios, rode em seguida `acervo.sh adicionar-municipios <UF>`. Use segundo plano. Ao terminar, rode `acervo.sh status` e explique o resultado em linguagem simples, lembrando as lacunas daquele estado listadas em `~/leis-brasil-acervo/COBERTURA.md`.
+Rode `python3 -I "${CLAUDE_PLUGIN_ROOT}/skills/leis-brasil/scripts/leis.py" adicionar-estado <UF>` com a sigla informada, acrescentando `--municipios` se o usuário também pediu os municípios. Use segundo plano: leva cerca de 1 minuto a cada 1.500 normas. Ao terminar, rode `python3 -I "${CLAUDE_PLUGIN_ROOT}/skills/leis-brasil/scripts/leis.py" status` e explique o resultado em linguagem simples. Mencione as lacunas daquele estado, que estão na tabela do arquivo COBERTURA.md do repositório (`python3 -I "${CLAUDE_PLUGIN_ROOT}/skills/leis-brasil/scripts/leis.py" baixar COBERTURA.md`).
