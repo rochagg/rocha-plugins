@@ -1,6 +1,11 @@
 {
   "name": "rocha-plugins",
-  "owner": { "name": "Gabriel Rocha" },
+  "owner": {
+    "name": "Gabriel Rocha"
+  },
+  "metadata": {
+    "description": "Plugins jurídicos do escritório Rocha Advocacia."
+  },
   "plugins": [
     {
       "name": "leis-brasil",
