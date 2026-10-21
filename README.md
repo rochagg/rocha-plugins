@@ -23,7 +23,7 @@ claude plugin marketplace add rochagg/rocha-plugins
 claude plugin install leis-brasil@rocha-plugins
 ```
 
-Reinicie o Claude Code e rode `/leis-brasil:instalar-acervo` para montar o índice.
+Reinicie o Claude Code e rode `/leis-brasil:instalar-acervo`. Ele baixa um índice pronto (~30 MB) publicado nas releases deste repositório e termina em menos de um minuto.
 
 ### Atualizar o plugin
 

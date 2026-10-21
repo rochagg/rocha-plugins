@@ -42,6 +42,7 @@ PASTAS = os.path.join(BASE, "pastas-indexadas.txt")
 CACHE = os.path.join(tempfile.gettempdir(), "leis-brasil-cache")
 REPOSITORIO = "https://github.com/ctresb/leis.git"
 RAW = "https://raw.githubusercontent.com/ctresb/leis/{versao}/{caminho}"
+INDICE_PRONTO = os.environ.get("LEIS_BRASIL_INDICE_PRONTO", "https://github.com/rochagg/rocha-plugins/releases/latest/download")  # índice pré-montado
 PASTAS_PADRAO = ["federal", "reguladores", "jurisprudencia", "tratados"]
 CAMPOS = ["arquivo", "tipo", "numero", "data", "ano", "uf", "situacao", "revogada", "titulo", "ementa", "fonte", "resumo"]
 TAMANHO_RESUMO = 400  # início do texto, para buscar por assunto quando a ementa não vem no cabeçalho
@@ -286,6 +287,9 @@ def instalar(args):
                     campos = ler_texto_cabecalho(f.read(BYTES_INICIO), com_resumo=True)
                 if campos:
                     linhas.append(linha_do_indice(caminho, campos))
+    elif baixar_indice_pronto():
+        atualizar(args)
+        return
     else:
         caminhos = arquivos_indexaveis(pastas)
         print(f"Montando o índice: lendo o começo de {len(caminhos)} arquivos no GitHub "
@@ -293,6 +297,30 @@ def instalar(args):
         linhas += indexar_remoto(caminhos)
     gravar_indice(linhas)
     print(f"Índice pronto: {len(linhas)} normas.")
+
+
+def baixar_indice_pronto():
+    """Baixa o índice publicado na release do plugin e alinha o sumário à versão do repositório usada nele."""
+    print("Baixando o índice pronto (~30 MB)...")
+    destino = {}
+    try:
+        for nome in ("indice.tsv.gz", "versao.txt"):
+            pedido = urllib.request.Request(f"{INDICE_PRONTO}/{nome}", headers={"User-Agent": "leis-brasil-plugin"})
+            with urllib.request.urlopen(pedido, timeout=120) as r:
+                destino[nome] = r.read()
+    except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
+        print(f"Índice pronto indisponível ({e}); vou montar o índice lendo o GitHub.")
+        return False
+    versao_indice = destino["versao.txt"].decode().strip()
+    if subprocess.run(["git", "-C", ARVORE, "fetch", "-q", "--depth", "1", "origin", versao_indice]).returncode != 0:
+        print("Não consegui alinhar o sumário ao índice; vou montar o índice lendo o GitHub.")
+        return False
+    git("update-ref", "HEAD", versao_indice)
+    global _VERSAO
+    _VERSAO = versao_indice
+    with open(INDICE, "wb") as f:
+        f.write(destino["indice.tsv.gz"])
+    return True
 
 
 def atualizar(_args):

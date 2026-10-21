@@ -1,6 +1,6 @@
 {
   "name": "leis-brasil",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Consulta a legislação brasileira em Markdown direto do repositório ctresb/leis no GitHub, sem baixar o acervo, com citação literal do texto e link para a fonte oficial.",
   "author": { "name": "Gabriel Rocha" }
 }
